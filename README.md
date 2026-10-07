@@ -6,13 +6,13 @@
 
 **Rayman Jungle Run for Nintendo Switch**
 
-An unofficial Nintendo Switch native wrapper for the 32-bit Android release of
+An unofficial Nintendo Switch native wrapper for the 32-bit Android release of  
 **Rayman Jungle Run**.
 
-[![Nintendo Switch](https://img.shields.io/badge/NINTENDO%20SWITCH-HOMEBREW-E60012?style=for-the-badge&logo=nintendoswitch&logoColor=white&labelColor=555555)](#)
-[![Version](https://img.shields.io/badge/VERSION-0.1.0-4C8BF5?style=for-the-badge&labelColor=555555)](#)
-[![AArch32](https://img.shields.io/badge/AARCH32-32--BIT%20NATIVE-7E22CE?style=for-the-badge&labelColor=555555)](#)
-[![License](https://img.shields.io/badge/LICENSE-MIT-4C9A0A?style=for-the-badge&labelColor=555555)](LICENSE)
+[![Nintendo Switch](https://img.shields.io/badge/Nintendo_Switch-Homebrew-E60012?style=for-the-badge&logo=nintendoswitch&logoColor=white)](#)
+[![Version](https://img.shields.io/badge/Version-0.1.0-4C8BF5?style=for-the-badge)](#)
+[![Architecture](https://img.shields.io/badge/AArch32-32--bit_Native-6A1B9A?style=for-the-badge)](#)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
 
 </div>
 
@@ -20,133 +20,198 @@ An unofficial Nintendo Switch native wrapper for the 32-bit Android release of
 
 ## About
 
-`rayman_nx` runs the 32-bit Android build of **Rayman Jungle Run 2.4.3**
-(`com.pastagames.ro1mobile`) on a Nintendo Switch with custom firmware, as a
-32-bit process. It loads the game's own libraries, `libRO1Mobile.so` (the
-whole game) and `libfmodex.so` (FMOD Ex, played through OpenSL ES on audout),
-and does what the game's Java side did: the OpenGL ES 1 context, the activity
-lifecycle, touch and controller input, and the data folders.
+`rayman_nx` is a native wrapper that runs the 32-bit ARM Android build of **Rayman Jungle Run 2.4.3** (`com.pastagames.ro1mobile`) on Nintendo Switch.
 
-**Nothing of the game is in this repository or in the release.** You need your
-own copy: the APK and the game's data folder from an Android device.
+It loads the game's original `libRO1Mobile.so` (Ubisoft Pasta Games' own engine) and `libfmodex.so` (FMOD Ex), and recreates what the game's Java side did: the OpenGL ES 1 context, the activity lifecycle, touch and controller input, and the data folders.
 
-It is built on the [android32](https://github.com/aks796/android32) runtime
-(loader, bionic, JNI, audio, launcher) by aks796, with
-[libnx32](https://github.com/aks796/libnx32) and
-[mesa32](https://github.com/aks796/mesa32). See [NOTES.md](NOTES.md) for how
-the port works and what this particular game needed.
+Because the Tegra X1 CPU in the Nintendo Switch natively supports 32-bit ARM (AArch32) execution, the game code runs **directly on the hardware at full native speed** (60 fps), with no CPU emulation.
 
-## What you need
+> [!NOTE]
+> **No game code or assets are included in this repository or in the release.**  
+> Users must supply their own legitimate copy of the game's APK and data folder.
 
-* A Switch with Atmosphere and [sphaira](https://github.com/ITotalJustice/sphaira).
-* The **32-bit APK** of Rayman Jungle Run 2.4.3 (`lib/armeabi-v7a/libRO1Mobile.so`
-  inside). Any file name ending in `.apk`.
-* The game's data folder from your phone:
-  `Android/data/com.pastagames.ro1mobile/files` (it holds `actor`, `gfx`,
-  `lvl`, `pasta`, `sfx`, `shaders`, `texts`, `en.lproj`, ...).
+---
 
-## Install
+## Features
 
-```
-/switch/rayman_nx/rayman_nx.nro            the launcher (from the release)
-/switch/rayman_nx/<any name>.apk           your APK
-/switch/rayman_nx/external/files/          the CONTENTS of your phone's "files" folder
-                                           (so /switch/rayman_nx/external/files/lvl, .../pasta, ...)
-```
+- **Full Native Performance:** Runs natively on the Switch ARM Cortex-A57 CPU in AArch32 mode, at 60 fps.
+- **Hardware-Accelerated Graphics:** Uses OpenGL ES 1 (the game's own renderer) via `mesa32` (Nouveau), at 720p or 1080p.
+- **Touchscreen & Controller Support:** Full touch controls as on mobile, controller play, and a **virtual cursor** for the menus that only take a finger.
+- **Sound:** FMOD Ex played through OpenSL ES on the Switch's audio output.
+- **Saves & HOME menu:** Progress is saved on the SD card; HOME and sleep pause and resume the game.
+- **Atmosphère & Sphaira Integration:** A dedicated launcher NRO registers a HOME menu forwarder icon.
 
-1. Copy the files above to the SD card.
-2. In sphaira: Homebrew → Rayman Jungle Run → **Install Forwarder**.
-3. Start the new icon on the HOME menu. The launcher installs the 32-bit game
-   program for that icon and restarts it. The first start unpacks the libraries
-   from the APK (a few seconds, with a progress bar; again only when the APK
-   changes).
+---
 
-Saves are kept in `external/files/saves/`.
+## Requirements
+
+### For Players
+- A Nintendo Switch running **Atmosphère** custom firmware.
+- The [Sphaira](https://github.com/ITotalJustice/sphaira) homebrew menu (Important: you need to install Sphaira's forwarder, otherwise the port won't work — the system would start it as a 64-bit program instead of 32-bit).
+- A copy of **Rayman Jungle Run 2.4.3** for Android, the **32-bit APK** (`lib/armeabi-v7a/libRO1Mobile.so` inside), not modified. The name of the APK does not matter.
+- The game's data folder from an Android device, `Android/data/com.pastagames.ro1mobile/files` (about 160 MB; the APK itself does not contain the game's levels, graphics and sounds).
+
+---
+
+## Installation Guide
+
+1. Download the latest release from the [Releases](../../releases) tab:
+   - `rayman_nx_0.1.0.zip`
+2. Copy the `switch/rayman_nx/` folder from the ZIP to the root of your SD card, so you get:
+   ```text
+   sdmc:/switch/rayman_nx/
+   ```
+3. Place your APK and your game data inside that folder:
+   - `rayman_nx.nro` is already there (from the ZIP).
+   - Copy your `rayman-jungle-run-v2.4.3.apk` into `sdmc:/switch/rayman_nx/` (the name of the apk does not matter).
+   - Copy the **contents** of your phone's `files` folder into `sdmc:/switch/rayman_nx/external/files/`.
+4. The final folder structure on your SD card must look like:
+   ```text
+   sdmc:/switch/rayman_nx/
+   ├── rayman_nx.nro
+   ├── rayman-jungle-run-v2.4.3.apk
+   └── external/
+       └── files/
+           ├── actor/
+           ├── gfx/
+           ├── lvl/
+           ├── pasta/
+           ├── sfx/
+           ├── shaders/
+           ├── en.lproj/
+           └── ...
+   ```
+5. Launch **Sphaira** on your Switch:
+   - Navigate to **Homebrew** › **Rayman Jungle Run**.
+   - Choose **Install Forwarder**.
+   - Return to the Switch HOME Menu and launch the game directly from its icon!
+
+The first start unpacks the game's libraries from the APK (a few seconds, with a progress bar; again only when the APK changes). Your progress is saved in `external/files/saves/`.
+
+---
 
 ## Controls
 
-| | |
-| --- | --- |
-| Touch screen (handheld) | as on the phone |
-| Controller | the game reads it itself (jump, punch, ...). `+` is Menu, `-` is Back |
-| D-pad / left stick, left and right | move through the menus (level map) |
-| R / L | the select / action keys of an Android TV remote |
-| **Cursor** | move the **right stick**: a cursor shows (it fades 3 s after you stop). **ZR** taps. For the menus that only take a finger |
+| Input | Action |
+| :--- | :--- |
+| **Touchscreen** | Direct touch controls (identical to the mobile version) |
+| **Controller buttons** | The game's own gamepad controls (jump, punch, ...) |
+| **D-Pad / Left Stick (left, right)** | Move through the menus (level map) |
+| **L / R** | The select / action keys of an Android TV remote |
+| **Right Stick** | Show and move the **cursor** (it fades 3 seconds after you stop) |
+| **ZR** | Tap with the cursor (for menus that only take a finger) |
+| **+ (Plus)** | Menu |
+| **− (Minus)** | Back |
 
-## config.ini
+---
 
-Written on the first start in `/switch/rayman_nx/config.ini`; changes apply the
-next time the game starts.
+## Configuration
 
-| Section | Option | |
-| --- | --- | --- |
+`config.ini` is written to `sdmc:/switch/rayman_nx/` on the first start. Changes apply the next time the game starts.
+
+<details>
+<summary>All options</summary>
+
+| Section | Option | Values |
+| :--- | :--- | :--- |
 | `[game]` | `interface` | `auto` (touch when handheld, gamepad interface when docked), `touch`, `gamepad` |
-| | `language` | `en fr de es it ja pt zh` |
-| `[graphics]` | `gles_version` | `1` (the game's renderer; default) or `2` |
-| `[controls]` | `touch_screen`, `left_stick_as_dpad`, `menu_keys`, `pointer_cursor` | on/off |
+| | `language` | `en` `fr` `de` `es` `it` `ja` `pt` `zh` |
+| `[graphics]` | `gles_version` | `1` (the game's renderer, default) or `2` |
+| `[controls]` | `touch_screen`, `left_stick_as_dpad`, `menu_keys`, `pointer_cursor` | `true` / `false` |
 | | `pointer_tap` | `zr` (default), `a`, `both` |
 | `[display]` | `resolution` | `auto`, `720`, `1080` |
 | `[performance]` | `boost_cpu_when_loading` | CPU at 1785 MHz until the first picture |
 | `[debug]` | `log_input`, `log_file_access`, `gl_trace`, `log_java_calls`, `gl_selftest`, `boot_log_on_screen` | for bug reports |
 
-## Not in this port
+</details>
 
-The store and purchases, leaderboards and achievements, social networks, push
-notifications, the "More Rayman" button and the gallery wallpaper are switched
-off: the Java answers as a phone with no account and no network.
+If something goes wrong, `debug.log` and `crash.log` are written next to `config.ini`. For a bug report, turn on `log_input` or `log_file_access` and send the log.
 
-## Build
+---
 
-You need Docker. **On Windows, run `git config --global core.autocrlf false`
-before cloning** (or clone inside WSL): with `autocrlf=true` the runtime's
-scripts and Makefiles become CRLF and do not run in the Linux container. The
-first two lines are what the android32 runtime expects, next to this folder:
+## Not in This Port
 
-```
-git clone --recurse-submodules <this repository>
-git clone https://github.com/aks796/libnx32      # then run its ./build.sh
-tools/get_portlibs.ps1                           # mesa32's lib/ and include/ into portlibs32/
-```
+The store and purchases, leaderboards and achievements, social networks, push notifications, the "More Rayman" button and the gallery wallpaper are switched off: the game's Java side answers as a phone with no account and no network.
 
-Then build the wrapper (the toolchain image is
-`ghcr.io/vita2hos/devcontainer/vita2hos`) and the launcher:
+---
 
-```
-./build.sh                  # Windows PowerShell: .\build.ps1   -> rayman_nx.nsp
-launcher/build.sh           # devkitpro/devkita64               -> launcher/rayman_nx.nro
-```
+## Building from Source
 
-`tools/` also has the helpers used to read the game's `classes.dex` and
-libraries (see NOTES.md).
+### Prerequisites
+- Linux (Ubuntu / Debian / Linux Mint recommended), or Windows with PowerShell
+- **Docker**
+- Git
 
-## Credits
+> [!IMPORTANT]
+> **On Windows, run `git config --global core.autocrlf false` before cloning.** With `autocrlf=true` the runtime's scripts and Makefiles are checked out with CRLF line endings and do not run in the Linux container.
 
-* **Rayman Jungle Run**: Ubisoft Pasta Games. Rayman is a trademark of Ubisoft.
-* **android32**, **libnx32**, **mesa32**: aks796; the loader derives from the
-  work of Andy Nguyen (TheOfficialFloW) and fgsfds, with reference to vita2hos
-  by xerpi.
-* libnx by the switchbrew authors; Mesa and nouveau.
-* The port: Iqbalriz.
+### Build Instructions
+
+1. **Clone the repository with submodules:**
+   ```bash
+   git clone --recursive https://github.com/iqbalriz/rayman_nx.git
+   cd rayman_nx
+   ```
+
+2. **Pull the required Docker toolchains:**
+   ```bash
+   docker pull ghcr.io/vita2hos/devcontainer/vita2hos
+   docker pull devkitpro/devkita64
+   ```
+
+3. **Set up `libnx32` and `mesa32`:**
+   - Compile `libnx32` next to this folder (the build looks for `../libnx32/prefix`):
+     ```bash
+     git clone https://github.com/aks796/libnx32.git ../libnx32
+     ../libnx32/build.sh
+     ```
+   - Download the prebuilt `mesa32` release into `portlibs32/`:
+     ```bash
+     tools/get_portlibs.sh
+     ```
+     (On Windows: `tools\get_portlibs.ps1`.)
+
+4. **Compile the 32-bit program:**
+   ```bash
+   ./build.sh
+   ```
+   (On Windows: `.\build.ps1`.) This makes `rayman_nx.nsp`.
+
+5. **Compile the 64-bit launcher NRO:**
+   ```bash
+   launcher/build.sh
+   ```
+   The compiled launcher will be located at `launcher/rayman_nx.nro`.
+
+See [NOTES.md](NOTES.md) for how the port works, what this particular game needed, and the helper tools in `tools/`.
+
+---
+
+## Credits & Acknowledgments
+
+- **Ubisoft & Pasta Games**: Original creators of Rayman Jungle Run. Rayman is a trademark of Ubisoft.
+- **[aks796](https://github.com/aks796)**: For the [`android32`](https://github.com/aks796/android32) runtime, [`libnx32`](https://github.com/aks796/libnx32), [`mesa32`](https://github.com/aks796/mesa32), and the [`flappybirdsfamily_nx`](https://github.com/aks796/flappybirdsfamily_nx) reference port this one started from.
+- **Andy Nguyen (TheOfficialFloW) & fgsfds**: Dynamic `.so` loader implementations.
+- **xerpi**: For `vita2hos`, pioneer of AArch32 native execution on Switch.
+- **Switchbrew**: For `libnx` and tools.
+- **ITotalJustice**: For Sphaira.
+
+---
 
 ## License
 
-MIT for this repository's own files, see [LICENSE](LICENSE). The runtime,
-libnx32 and mesa32 keep their own licenses. This project is not affiliated
-with or endorsed by Ubisoft or Nintendo.
+This project is licensed under the [MIT License](LICENSE).
+Rayman Jungle Run is a trademark of Ubisoft Entertainment. This project is not affiliated with or endorsed by Ubisoft or Nintendo.
 
 ---
 
 ## Bahasa Indonesia (ringkas)
 
-Wrapper tidak resmi untuk menjalankan **Rayman Jungle Run** (APK Android
-32-bit, versi 2.4.3) di Nintendo Switch ber-CFW. Repositori ini **tidak
-berisi game apa pun**: kamu perlu APK dan folder data game dari salinan milikmu
-sendiri.
+Wrapper tidak resmi untuk menjalankan **Rayman Jungle Run** (APK Android 32-bit, versi 2.4.3) di Nintendo Switch ber-CFW. Repositori ini **tidak berisi game apa pun**: kamu perlu APK dan folder data game dari salinan milikmu sendiri.
 
-1. Salin `rayman_nx.nro` dan APK ke `/switch/rayman_nx/`.
-2. Salin ISI folder `Android/data/com.pastagames.ro1mobile/files` dari HP ke
-   `/switch/rayman_nx/external/files/`.
-3. Di sphaira: *Install Forwarder*, lalu jalankan ikonnya dari menu HOME.
+1. Unduh `rayman_nx_0.1.0.zip` dari tab Releases, lalu salin folder `switch/rayman_nx/` ke SD card.
+2. Salin APK-mu ke `/switch/rayman_nx/`.
+3. Salin ISI folder `Android/data/com.pastagames.ro1mobile/files` dari HP ke `/switch/rayman_nx/external/files/`.
+4. Di Sphaira: **Homebrew** › **Rayman Jungle Run** › **Install Forwarder**, lalu jalankan ikonnya dari menu HOME.
 
-Kursor virtual untuk menu yang hanya mendukung sentuhan: gerakkan stick kanan,
-tekan ZR untuk mengetuk. Opsi lengkap ada di tabel `config.ini` di atas.
+Untuk menu yang hanya mendukung sentuhan: gerakkan stick kanan sampai kursor muncul, lalu tekan ZR untuk mengetuk.
