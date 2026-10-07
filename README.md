@@ -2,8 +2,8 @@
 
 **Rayman Jungle Run on Nintendo Switch**
 
-An unofficial Nintendo Switch wrapper for the Android version of
-**Rayman Jungle Run** (Ubisoft Pasta Games), by Iqbalriz.
+An unofficial Nintendo Switch native wrapper for the 32-bit Android release of
+**Rayman Jungle Run**.
 
 Version 0.1.0 · 32-bit (armeabi-v7a) · OpenGL ES 1 · 60 fps on hardware
 
