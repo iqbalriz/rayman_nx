@@ -4,6 +4,7 @@
 
 enum { RO_UI_AUTO, RO_UI_TOUCH, RO_UI_GAMEPAD };
 enum { RO_TAP_A, RO_TAP_ZR, RO_TAP_BOTH };
+enum { RO_PLUS_OFF, RO_PLUS_MENU, RO_PLUS_GAME };
 
 typedef struct {
   int ui;          /* [game] interface: auto, touch, gamepad */
@@ -14,6 +15,7 @@ typedef struct {
   int menu_keys;   /* [controls] menu_keys */
   int pointer_cursor; /* [controls] pointer_cursor */
   int pointer_tap;    /* [controls] pointer_tap: RO_TAP_* */
+  int plus_button;    /* [controls] plus_button: RO_PLUS_* */
   int log_files;      /* [debug] log_file_access */
   int volume;      /* [sound] volume 0-100 (reserved) */
   int res_w, res_h;/* [display] resolution */

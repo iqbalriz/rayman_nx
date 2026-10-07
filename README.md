@@ -100,7 +100,7 @@ The first start unpacks the game's libraries from the APK (a few seconds, with a
 | **L / R** | The select / action keys of an Android TV remote |
 | **Right Stick** | Show and move the **cursor** (it fades 3 seconds after you stop) |
 | **ZR** | Tap with the cursor (for menus that only take a finger) |
-| **+ (Plus)** | Menu |
+| **+ (Plus)** | Nothing by default (`plus_button` in `config.ini`) |
 | **− (Minus)** | Back |
 
 ---
@@ -118,6 +118,7 @@ The first start unpacks the game's libraries from the APK (a few seconds, with a
 | | `language` | `en` `fr` `de` `es` `it` `ja` `pt` `zh` |
 | `[graphics]` | `gles_version` | `1` (the game's renderer, default) or `2` |
 | `[controls]` | `touch_screen`, `left_stick_as_dpad`, `menu_keys`, `pointer_cursor` | `true` / `false` |
+| | `plus_button` | `off` (default), `menu` (the Android Menu key), `game` (Start, read by the game) |
 | | `pointer_tap` | `zr` (default), `a`, `both` |
 | `[display]` | `resolution` | `auto`, `720`, `1080` |
 | `[performance]` | `boost_cpu_when_loading` | CPU at 1785 MHz until the first picture |

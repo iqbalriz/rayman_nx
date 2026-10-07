@@ -111,6 +111,7 @@ static JObj *jstr(const char *s) {
 static PadState g_pad, g_pad_hh;
 static int g_pad_ready, g_pad_present;
 static uint8_t g_keys[256];        /* Android key code -> held */
+static int g_plus_down;            /* Plus is held (g_keys[START] is hidden from the game unless plus_button = game) */
 static float g_stick[2][2];        /* left, right: x, y (y up) */
 static PadState *g_pad_cur;
 
@@ -137,7 +138,8 @@ static void pad_poll(void) {
   g_keys[AK_BUTTON_R2] = !!(buttons & HidNpadButton_ZR);
   g_keys[AK_BUTTON_THUMBL] = !!(buttons & HidNpadButton_StickL);
   g_keys[AK_BUTTON_THUMBR] = !!(buttons & HidNpadButton_StickR);
-  g_keys[AK_BUTTON_START] = !!(buttons & HidNpadButton_Plus);
+  g_plus_down = !!(buttons & HidNpadButton_Plus);
+  g_keys[AK_BUTTON_START] = dcr_config()->plus_button == RO_PLUS_GAME ? g_plus_down : 0;
   g_keys[AK_BUTTON_SELECT] = !!(buttons & HidNpadButton_Minus);
   g_keys[AK_DPAD_UP] = !!(buttons & HidNpadButton_Up);
   g_keys[AK_DPAD_DOWN] = !!(buttons & HidNpadButton_Down);
@@ -256,8 +258,12 @@ static void menu_keys(void) {
   static int plus, minus;
   if (!g_pad_present)
     return;
-  const int p = g_keys[AK_BUTTON_START], m = g_keys[AK_BUTTON_SELECT];
-  if (p && !plus && g_n.PressMenu)
+  /* Plus: the game's Menu key (nativePressMenu) only when asked for. In
+   * Rayman Fiesta Run it was not a clean pause (Minus, nativePressBack, is the
+   * pause, and Plus sending Menu as well paused and resumed in a flash), and
+   * the two games share this engine. */
+  const int p = g_plus_down, m = g_keys[AK_BUTTON_SELECT];
+  if (p && !plus && dcr_config()->plus_button == RO_PLUS_MENU && g_n.PressMenu)
     g_n.PressMenu(ENV, ACT);
   if (m && !minus && g_n.PressBack) {
     const int handled = g_n.PressBack(ENV, ACT) & 0xff;

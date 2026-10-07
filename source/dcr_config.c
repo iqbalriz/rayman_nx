@@ -22,6 +22,7 @@ static DcrConfig g_cfg = {
     .menu_keys = 1,
     .pointer_cursor = 1,
     .pointer_tap = RO_TAP_ZR,
+    .plus_button = RO_PLUS_OFF,
     .volume = 100,
     .res_w = 1280,
     .res_h = 720,
@@ -61,6 +62,11 @@ static const CfgOpt k_opts[] = {
      "# (it picks with A in some menus). With a, the cursor keeps A while it shows\n"
      "# (3 seconds after the right stick moved), so the game's own A does not work then.",
      CFG_CHOICE, "a,zr,both", &g_cfg.pointer_tap},
+    {"controls", "plus_button", "off",
+     "What the + button does. off: nothing (Minus is the pause button). menu: the\n"
+     "# Android Menu key, which can open and close things in a flash. game: the\n"
+     "# controller's Start, left to the game's own reading of it.",
+     CFG_CHOICE, "off,menu,game", &g_cfg.plus_button},
     CFG_ROW_RESOLUTION("auto",
                        "Rendering resolution: 720, 1080 or auto (1080 if docked when the game\n"
                        "# starts). The Switch scales the result to the screen."),
