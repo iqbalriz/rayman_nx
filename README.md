@@ -1,11 +1,20 @@
+<div align="center">
+
+<img src="launcher/icon.jpg" alt="Rayman Jungle Run" width="160">
+
 # rayman_nx
 
-**Rayman Jungle Run on Nintendo Switch**
+**Rayman Jungle Run for Nintendo Switch**
 
-An unofficial Nintendo Switch wrapper for the Android version of
-**Rayman Jungle Run** (Ubisoft Pasta Games), by Iqbalriz.
+An unofficial Nintendo Switch native wrapper for the 32-bit Android release of
+**Rayman Jungle Run**.
 
-Version 0.1.0 · 32-bit (armeabi-v7a) · OpenGL ES 1 · 60 fps on hardware
+[![Nintendo Switch](https://img.shields.io/badge/NINTENDO%20SWITCH-HOMEBREW-E60012?style=for-the-badge&logo=nintendoswitch&logoColor=white&labelColor=555555)](#)
+[![Version](https://img.shields.io/badge/VERSION-0.1.0-4C8BF5?style=for-the-badge&labelColor=555555)](#)
+[![AArch32](https://img.shields.io/badge/AARCH32-32--BIT%20NATIVE-7E22CE?style=for-the-badge&labelColor=555555)](#)
+[![License](https://img.shields.io/badge/LICENSE-MIT-4C9A0A?style=for-the-badge&labelColor=555555)](LICENSE)
+
+</div>
 
 ---
 
