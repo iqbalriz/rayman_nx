@@ -183,8 +183,6 @@ The store and purchases, leaderboards and achievements, social networks, push no
    ```
    The compiled launcher will be located at `launcher/rayman_nx.nro`.
 
-See [NOTES.md](NOTES.md) for how the port works, what this particular game needed, and the helper tools in `tools/`.
-
 ---
 
 ## Credits & Acknowledgments
@@ -202,16 +200,3 @@ See [NOTES.md](NOTES.md) for how the port works, what this particular game neede
 
 This project is licensed under the [MIT License](LICENSE).
 Rayman Jungle Run is a trademark of Ubisoft Entertainment. This project is not affiliated with or endorsed by Ubisoft or Nintendo.
-
----
-
-## Bahasa Indonesia (ringkas)
-
-Wrapper tidak resmi untuk menjalankan **Rayman Jungle Run** (APK Android 32-bit, versi 2.4.3) di Nintendo Switch ber-CFW. Repositori ini **tidak berisi game apa pun**: kamu perlu APK dan folder data game dari salinan milikmu sendiri.
-
-1. Unduh `rayman_nx_0.1.0.zip` dari tab Releases, lalu salin folder `switch/rayman_nx/` ke SD card.
-2. Salin APK-mu ke `/switch/rayman_nx/`.
-3. Salin ISI folder `Android/data/com.pastagames.ro1mobile/files` dari HP ke `/switch/rayman_nx/external/files/`.
-4. Di Sphaira: **Homebrew** › **Rayman Jungle Run** › **Install Forwarder**, lalu jalankan ikonnya dari menu HOME.
-
-Untuk menu yang hanya mendukung sentuhan: gerakkan stick kanan sampai kursor muncul, lalu tekan ZR untuk mengetuk.
