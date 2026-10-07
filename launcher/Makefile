@@ -5,7 +5,7 @@
 #---------------------------------------------------------------------------------
 APP_TITLE    := Rayman Jungle Run
 APP_AUTHOR   := Iqbalriz
-APP_VERSION  := 0.1.0
+APP_VERSION  := 0.1.1
 TARGET       := rayman_nx
 PORT_PAYLOAD := rayman_nx
 TOPDIR ?= $(CURDIR)

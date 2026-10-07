@@ -10,7 +10,7 @@ An unofficial Nintendo Switch native wrapper for the 32-bit Android release of
 **Rayman Jungle Run**.
 
 [![Nintendo Switch](https://img.shields.io/badge/Nintendo_Switch-Homebrew-E60012?style=for-the-badge&logo=nintendoswitch&logoColor=white)](#)
-[![Version](https://img.shields.io/badge/Version-0.1.0-4C8BF5?style=for-the-badge)](#)
+[![Version](https://img.shields.io/badge/Version-0.1.1-4C8BF5?style=for-the-badge)](#)
 [![Architecture](https://img.shields.io/badge/AArch32-32--bit_Native-6A1B9A?style=for-the-badge)](#)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
 
@@ -56,7 +56,7 @@ Because the Tegra X1 CPU in the Nintendo Switch natively supports 32-bit ARM (AA
 ## Installation Guide
 
 1. Download the latest release from the [Releases](../../releases) tab:
-   - `rayman_nx_0.1.0.zip`
+   - `rayman_nx_0.1.1.zip`
 2. Copy the `switch/rayman_nx/` folder from the ZIP to the root of your SD card, so you get:
    ```text
    sdmc:/switch/rayman_nx/

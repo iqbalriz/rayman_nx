@@ -13,6 +13,6 @@
 #---------------------------------------------------------------------------------
 TARGET               := rayman_nx
 PORT_NPDM_PROGRAM_ID := 0x010093A06B84BFD6
-PORT_NPDM_VERSION    := 0.1.0
+PORT_NPDM_VERSION    := 0.1.1
 PORT_NPDM_MAIN_STACK := 0x400000
 include runtime/runtime.mk
